@@ -2,6 +2,9 @@
  *  If you want to override some bootstrap variables, you have to change values here.
  *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
  */
+$brand-primary: #f4b32a;
+$brand-danger: #df2426;
+$body-bg: #61d9fe;
 $navbar-inverse-link-color: #5AADBB;
 $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 
@@ -19,12 +22,48 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
   padding: 0.2em 0;
 }
 
+.container{
+	background: #fff;
+}
+
 .thumbnail {
   height: 200px;
 
   img.pull-right {
     width: 50px;
   }
+}
+
+.brand{
+	max-width:200px;
+}
+
+.character{
+	height: 45px;
+}
+
+.episodeList{
+	padding-left: 150px;
+	position:relative
+}
+
+.season{
+	width:150px;
+	position: absolute;
+	left:0px;
+}
+
+.tier-select{
+	margin-left: auto;
+	margin-right:auto;
+}
+
+.intro strong {
+	color: $brand-danger;
+}
+
+.episodeList h3 strong{
+	color: #bbb;
 }
 
 /**

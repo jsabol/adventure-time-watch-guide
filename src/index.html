@@ -24,39 +24,48 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="container" ng-controller="MainController as main">
-    
-      <div>
-        <acme-navbar creation-date="main.creationDate"></acme-navbar>
+    <div class="container"  ng-controller="MainController as main">
+
+      <h1><img class="brand" alt="Adventure Time Logo" src="assets/images/adventure_time_logo.png" /> Watch Guide</h1>
+
+      <div class="well intro">
+        <h4>Don't have {{ main.totalEpisodes | episodesToTime | date:"H 'hrs' m 'mins'"}} to watch all {{main.totalEpisodes}} episodes of Adventure Time?</h4>
+
+        <h4>
+        Blast through the
+          <span ng-show="main.currentTier >= 1">main plot</span><span ng-show="main.currentTier == 2"> and subplots</span><span ng-show="main.currentTier == 3">, subplots, and special episodes</span> 
+          in <strong>{{ filteredEpisodes.length | episodesToTime | date:"H 'hrs' m 'mins'"}}</strong>. That's {{filteredEpisodes.length / main.totalEpisodes * 100 | number:0}}% of the show. Mathematical!</h4>
       </div>
-    
-      <div class="jumbotron text-center">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">
-          <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-          Always a pleasure scaffolding your apps.
-        </p>
-        <p class="animated infinite" ng-class="main.classAnimation">
-          <button type="button" class="btn btn-lg btn-success" ng-click="main.showToastr()">Splendid Toastr</button>
-        </p>
-        <p>
-          With ♥ thanks to the contributions of<acme-malarkey extra-values="['Yeoman', 'Gulp', 'Angular']"></acme-malarkey>
-        </p>
+
+      
+<p></p><p></p>
+
+      <div class="tier-select btn-group">
+        <label class="btn btn-lg btn-default" ng-model="main.currentTier" uib-btn-radio="1">Main Quest
+          <img class="character" src="assets/images/finn.png" alt="Finn" />
+        </label>
+        <label class="btn btn-lg btn-primary" ng-model="main.currentTier" uib-btn-radio="2">Side Quests
+          <img class="character" src="assets/images/bmo.png" alt="BMO" />
+        </label>
+        <label class="btn btn-lg btn-danger" ng-model="main.currentTier" uib-btn-radio="3">Extras
+          <img class="character" src="assets/images/ice_crown.png" alt="Finn" />
+        </label>
       </div>
+
+      <p></p>
+
+      
     
-      <div class="row">
-        <div class="col-sm-6 col-md-4" ng-repeat="awesomeThing in main.awesomeThings | orderBy:'rank'">
-          <div class="thumbnail">
-            <img class="pull-right" ng-src="assets/images/{{ awesomeThing.logo }}" alt="{{ awesomeThing.title }}">
-            <div class="caption">
-              <h3>{{ awesomeThing.title }}</h3>
-              <p>{{ awesomeThing.description }}</p>
-              <p><a ng-href="{{awesomeThing.url}}">{{ awesomeThing.url }}</a></p>
-            </div>
-          </div>
+
+      <div class="episodeList" ng-repeat="ep in main.episodes | filter:main.isInTier as filteredEpisodes">
+        <div ng-show="main.showSeasonHeader(ep, $index, filteredEpisodes)">
+          <img class="season" ng-src="assets/images/season{{ep.season}}.jpg"/>
+          <h1>Season {{ep.season}}</h1>
         </div>
+        <h3><strong>{{ep.season}}x{{ep.number}}</strong> {{ep.title}}</h3>
+        <hr>
       </div>
-    
+
     </div>
     
 
