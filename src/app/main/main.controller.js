@@ -11,10 +11,10 @@
 
     vm.episodes = [];
     vm.currentTier = 1;
+    vm.totalEpisodes = 0;
 
     //temporary
-    vm.totalSeasons = 6;
-    vm.totalEpisodes = 199;
+    vm.totalSeasons = 7;
 
     getEpisodes();
 
@@ -31,6 +31,7 @@
         .then(function success(response){
           var rows = response.data.feed.entry;
           vm.episodes = rows.map(processEpisodeData);
+          vm.totalEpisodes = vm.episodes.length;
         }, function error(){
 
         });
@@ -41,20 +42,23 @@
 
       //create arc array
       var arcs = [];
-      if(ep.gsx$arc.$t){
-        arcs.push(ep.gsx$arc.$t);
+      if(ep.gsx$keywords.$t){
+        arcs.push(ep.gsx$keywords.$t);
       }
-      if(ep.gsx$arc2.$t){
-        arcs.push(ep.gsx$arc2.$t);
+      if(ep.gsx$keywords2.$t){
+        arcs.push(ep.gsx$keywords2.$t);
       }
-      if(ep.gsx$arc3.$t){
-        arcs.push(ep.gsx$arc3.$t);
+      if(ep.gsx$keywords3.$t){
+        arcs.push(ep.gsx$keywords3.$t);
+      }
+      if(ep.gsx$keywords4.$t){
+        arcs.push(ep.gsx$keywords4.$t);
       }
 
       return {
-        season: parseInt(ep.gsx$season.$t),
-        number: parseInt(ep.gsx$number.$t),
-        title: ep.gsx$title.$t,
+        season: parseInt(ep.gsx$partofseason.$t),
+        number: parseInt(ep.gsx$episodenumber.$t),
+        title: ep.gsx$name.$t,
         arcs: arcs,
         article: ep.gsx$article.$t,
         tier: parseInt(ep.gsx$priority.$t)

@@ -5,6 +5,9 @@
     <title>adventureTimeWatchGuide</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+
+    <link href='https://fonts.googleapis.com/css?family=Port+Lligat+Slab' rel='stylesheet' type='text/css'>
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
@@ -28,19 +31,16 @@
 
       <h1><img class="brand" alt="Adventure Time Logo" src="assets/images/adventure_time_logo.png" /> Watch Guide</h1>
 
-      <div class="well intro">
-        <h4>Don't have {{ main.totalEpisodes | episodesToTime | date:"H 'hrs' m 'mins'"}} to watch all {{main.totalEpisodes}} episodes of Adventure Time?</h4>
+      <div class="well intro" ng-show="main.episodes.length">
+        <p>Don't have {{ main.totalEpisodes | episodesToTime | date:"H 'hrs' m 'mins'"}} to watch all {{main.totalEpisodes}} episodes of Adventure Time?</p>
 
-        <h4>
         Blast through the
           <span ng-show="main.currentTier >= 1">main plot</span><span ng-show="main.currentTier == 2"> and subplots</span><span ng-show="main.currentTier == 3">, subplots, and special episodes</span> 
-          in <strong>{{ filteredEpisodes.length | episodesToTime | date:"H 'hrs' m 'mins'"}}</strong>. That's {{filteredEpisodes.length / main.totalEpisodes * 100 | number:0}}% of the show. Mathematical!</h4>
+          in <strong>{{ filteredEpisodes.length | episodesToTime | date:"H 'hrs' m 'mins'"}}</strong>. 
+          That's <strong>{{filteredEpisodes.length / main.totalEpisodes * 100 | number:0}}%</strong> of the show. Mathematical!
       </div>
 
-      
-<p></p><p></p>
-
-      <div class="tier-select btn-group">
+      <div class="tier-select btn-group" >
         <label class="btn btn-lg btn-default" ng-model="main.currentTier" uib-btn-radio="1">Main Quest
           <img class="character" src="assets/images/finn.png" alt="Finn" />
         </label>
@@ -56,16 +56,17 @@
 
       
     
+      <div class="episodeList" ng-cloak>
+        <div ng-repeat="ep in main.episodes | filter:main.isInTier as filteredEpisodes" >
+          
+          <div ng-if="main.showSeasonHeader(ep, $index, filteredEpisodes)">
+            <img class="season" ng-src="assets/images/season{{ep.season}}.jpg"/>
+            <h2>Season {{ep.season}}</h2>
+          </div>
 
-      <div class="episodeList" ng-repeat="ep in main.episodes | filter:main.isInTier as filteredEpisodes">
-        <div ng-show="main.showSeasonHeader(ep, $index, filteredEpisodes)">
-          <img class="season" ng-src="assets/images/season{{ep.season}}.jpg"/>
-          <h1>Season {{ep.season}}</h1>
+          <strong>{{ep.season}}x{{ep.number}}</strong> {{ep.title}}
+          <hr>
         </div>
-        <h3><strong>{{ep.season}}x{{ep.number}}</strong> {{ep.title}}</h3>
-        <hr>
-      </div>
-
     </div>
     
 
